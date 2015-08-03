@@ -1,0 +1,41 @@
+{# src/Blogger/BlogBundle/Resources/views/Page/index.html.twig #}
+
+{% extends 'BloggerBlogBundle::layout.html.twig' %}
+
+{% block body %}
+    {% if blogs is defined %}
+    {% for blog in blogs %}
+        <h2 class="lead">
+            <a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id, 'slug': blog.slug }) }}">{{ blog.title }}</a>
+        </h2>
+        <p>
+            by <a href="index.php">Start Bootstrap</a>
+        </p>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on {{ blog.created|date('l, F j, Y') }}</p>
+        <hr>
+        <img class="img-responsive" src="{{ asset(['images/', blog.image]|join) }}" alt="">
+        <hr>
+        <p>{{ blog.blog(500) }}</p>
+        <a class="btn btn-primary" href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id, 'slug': blog.slug }) }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+    {% endfor %}
+    {% else %}
+        <p>There are no blog entries for symblog</p>
+    {% endif %}
+    <!-- Pager -->
+    {% if total_pages > 0 %}
+    <ul class="pager">
+        {% if current_page != 1 %}
+        <li class="previous {% if current_page == 1 %} disabled {% endif %}">
+            <a href="{{ path('BloggerBlogBundle_homepage', {'page': current_page - 1}) }}">&larr; Older</a>
+        </li>
+        {% endif %}
+        {% if current_page != total_pages %}
+        <li class="next {% if current_page == total_pages %} disabled {% endif %}">
+            <a href="{{ path('BloggerBlogBundle_homepage', {'page': current_page + 1}) }}">Newer &rarr;</a>
+        </li>
+    {% endif %}
+    </ul>
+    {% endif %}
+{% endblock %}

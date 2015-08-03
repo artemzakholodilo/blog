@@ -1,0 +1,11 @@
+services:
+    blogger_blog.twig.extension:
+            class: Blogger\BlogBundle\Twig\Extensions\BloggerBlogExtension
+            tags:
+                - { name: twig.extension }
+
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
+        ib_user.oauth_user_provider:
+            class: Blogger\BlogBundle\Auth\OAuthProvider
+            arguments: [@session, @doctrine, @service_container]
